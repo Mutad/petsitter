@@ -7,13 +7,18 @@ use Illuminate\View\Component;
 class Layout extends Component
 {
     /**
+     * Toggle visibility of header
+     */
+    public $header;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($header = true)
     {
-        //
+        $this->header = $header;
     }
 
     /**

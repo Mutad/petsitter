@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :header=false>
     <div class="d-flex align-items-center vh-100">
         <form action="/login" method="post" class="text-center form-signin">
             <h3>Please Sign in</h3>

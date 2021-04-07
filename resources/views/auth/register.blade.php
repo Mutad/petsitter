@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :header="false">
     <div class="d-flex align-items-center vh-100">
         <form action="/register" method="post" class="text-center form-signup">
             <h1>Create your account</h1>

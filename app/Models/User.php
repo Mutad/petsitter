@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($password);
     }
+
+    /**
+     * Get all of the pets for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pets()
+    {
+        return $this->hasMany(Pet::class, 'owner_id', 'id');
+    }
 }

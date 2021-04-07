@@ -60,7 +60,7 @@ class AuthController extends Controller
         } else {
             $user = User::create(request(['name', 'email', 'password']));
             auth()->login($user);
-            return redirect('/games');
+            return redirect('/');
         }
     }
 
