@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'country',
+        'city',
     ];
 
     /**
@@ -57,5 +59,35 @@ class User extends Authenticatable
     public function pets()
     {
         return $this->hasMany(Pet::class, 'owner_id', 'id');
+    }
+
+    // /**
+    //  * Get the sitter that owns the User
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    //  */
+    // public function sitter()
+    // {
+    //     return $this->belongsTo(Sitter::class, 'id', 'account_id');
+    // }
+
+    /**
+     * Get the sitter associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sitter()
+    {
+        return $this->hasOne(Sitter::class, 'account_id', 'id');
+    }
+
+    /**
+     * Get all of the orders   for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'reciever_id', 'id');
     }
 }

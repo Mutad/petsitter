@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Auth;
+use Str;
 
 class PetController extends Controller
 {
@@ -12,9 +14,14 @@ class PetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pets.all', ['pets'=>Pet::paginate(10)]);
+        if ($request->type) {
+            $pets = Pet::where('type', 'LIKE', $request->type)->paginate(9);
+        } else {
+            $pets = Pet::paginate(9);
+        }
+        return view('pets.all', ['pets'=>$pets]);
     }
 
     /**
@@ -24,7 +31,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        //
+        return view('pets.create');
     }
 
     /**
@@ -35,7 +42,22 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'=>'required|string',
+            'description'=>'required|string',
+            'type'=>'required|in:cat,dog',
+            'weight'=>'required|numeric',
+            'hourly_rate'=>'required|numeric',
+            'image'=>'file|max:2048',
+        ]);
+
+        if ($request->file('image')) {
+            $guessExtension = $request->file('image')->guessExtension();
+            $validated['image'] = Str::random(40) .'.'.$guessExtension;
+            $path = $request->file('image')->storeAs('public/pets', $validated['image']);
+        }
+        $pet = Auth::user()->pets()->create($validated);
+        return redirect()->route('pets.show', $pet);
     }
 
     /**
@@ -57,7 +79,11 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        //
+        if (Auth::user()->id == $pet->owner_id) {
+            return view('pets.edit', ['pet'=>$pet]);
+        } else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -69,7 +95,26 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
-        //
+        if (Auth::user()->id != $pet->owner_id) {
+            return redirect('/');
+        }
+        $validated = $request->validate([
+            'name'=>'required|string',
+            'description'=>'required|string',
+            'type'=>'required|in:cat,dog',
+            'weight'=>'required|numeric',
+            'hourly_rate'=>'required|numeric',
+            'image'=>'file|image|max:2048',
+        ]);
+
+        if ($request->file('image')) {
+            $guessExtension = $request->file('image')->guessExtension();
+            $validated['image'] = Str::random(40) .'.'.$guessExtension;
+            $path = $request->file('image')->storeAs('public/pets', $validated['image']);
+        }
+
+        $pet->update($validated);
+        return redirect()->route('pets.show', $pet);
     }
 
     /**
@@ -78,8 +123,27 @@ class PetController extends Controller
      * @param  \App\Models\Pet  $pet
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pet $pet)
+    public function delete(Pet $pet)
     {
-        //
+        if (Auth::user()->id == $pet->owner_id) {
+            $pet->delete();
+        }
+        return redirect('/');
+    }
+
+    public function sit(Request $request, Pet $pet)
+    {
+        $validated = $request->validate([
+            'hours'=>'required|numeric'
+        ]);
+
+        $validated['pet_id'] = $pet->id;
+        $validated['reciever_id'] = $pet->owner_id;
+        $validated['hourly_cost'] = $pet->hourly_rate;
+        $validated['sitter_confirmed'] = true;
+
+        Auth::user()->sitter->orders()->create($validated);
+
+        return redirect('/orders');
     }
 }

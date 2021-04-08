@@ -25,7 +25,6 @@ class AuthController extends Controller
             'email'=>'required|email|exists:users,email',
             'password'=>'required'
         ]);
-        // dd($request->except('password'));
         if ($validator->fails()) {
             return redirect('/login')
                 ->withErrors($validator) // send back all errors to the login form

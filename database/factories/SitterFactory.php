@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Pet;
+use App\Models\Sitter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PetFactory extends Factory
+class SitterFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Pet::class;
+    protected $model = Sitter::class;
 
     /**
      * Define the model's default state.
@@ -22,11 +22,8 @@ class PetFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->firstName(),
             'description'=>$this->faker->realText($maxNbChars = 200, $indexSize = 2),
-            'type'=> $this->faker->randomElement(['Cat' ,'Dog']),
-            'weight'=> $this->faker->numberBetween(1,50),
-            'hourly_rate'=> $this->faker->randomFloat(2,1,10),
+            'account_id' => \App\Models\User::factory()->create()->id,
         ];
     }
 }

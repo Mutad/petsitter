@@ -15,10 +15,14 @@ class CreatePetsTable extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('hourly_rate', 15, 2);
             $table->foreignId('owner_id');
+            $table->string('name');
+            $table->string('image')->default('default.jpg');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->longText('description');
+            $table->enum('type', ['cat','dog']);
+            $table->decimal('weight', 5, 2);
+            $table->decimal('hourly_rate', 15, 2);
             $table->timestamps();
         });
     }
