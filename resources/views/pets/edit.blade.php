@@ -22,6 +22,8 @@
                 <select name="type" id="typeField" class="form-control">
                     <option value="cat" @if ($pet->type == 'cat') selected @endif>Kat</option>
                     <option value="dog" @if ($pet->type == 'dog') selected @endif>Hond</option>
+                    <option value="chicken" @if ($pet->type == 'chicken') selected @endif>Kip/haan</option>
+                    <option value="other" @if ($pet->type == 'other') selected @endif>Alle overige dieren</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -35,9 +37,6 @@
                     value="{{ $pet->hourly_rate }}">
             </div>
             <button type="submit" class="btn btn-primary">Bijwerken</button>
-            @if ($errors->any())
-                <div class="alert alert-danger">{{ $errors->first() }}</div>
-            @endif
         </form>
     </div>
 </x-layout>

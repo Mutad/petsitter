@@ -1,7 +1,7 @@
 <x-layout :header=false>
     <div class="d-flex align-items-center vh-100">
         <form action="/login" method="post" class="text-center form-signin">
-            <h3>Log in alstublieft</h3>
+            <h3>Log in</h3>
             @csrf
             <div class="form-floating">
                 <input required class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
@@ -16,7 +16,7 @@
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
             <div>
-                <a class="btn btn-link" href="/register">Nog geen account? Maak er nu een aan.</a>
+                <a class="btn btn-link" href="/register">Nog geen account? Maak er nu een aan!</a>
             </div>
             @if ($errors->any())
                 <div class="alert alert-danger">{{ $errors->first() }}</div>

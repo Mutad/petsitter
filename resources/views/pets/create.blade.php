@@ -20,6 +20,8 @@
                 <select name="type" id="typeField" class="form-control">
                     <option value="cat">Kat</option>
                     <option value="dog">Hond</option>
+                    <option value="chicken">Kip/haan</option>
+                    <option value="other">Alle overige dieren</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -31,9 +33,6 @@
                 <input type="number" name="hourly_rate" id="hourlyField" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Toevoegen</button>
-            @if ($errors->any())
-                <div class="alert alert-danger">{{ $errors->first() }}</div>
-            @endif
         </form>
     </div>
 </x-layout>

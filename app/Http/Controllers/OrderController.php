@@ -29,4 +29,12 @@ class OrderController extends Controller
         $order->save();
         return redirect()->back();
     }
+
+    public function delete(Order $order)
+    {
+        if (Auth::user()->admin) {
+            $order->delete();
+        }
+        return redirect()->back();
+    }
 }

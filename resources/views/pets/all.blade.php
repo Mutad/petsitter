@@ -5,12 +5,15 @@
             <h3>Huisdieren</h3>
             <a href="{{ route('pets.create') }}" class="btn btn-primary">Voeg je huisdier toe</a>
         </div>
-        <form class="body p-3" method="{{route('pets.index')}}">
+        <form class="body p-3" method="{{ route('pets.index') }}">
             <label for="typeField">Filter</label>
             <div class="input-group">
                 <select name="type" id="typeField" class="form-select">
+                    <option value="">All</option>
                     <option value="cat">Kat</option>
                     <option value="dog">Hond</option>
+                    <option value="chicken">Kip/haan</option>
+                    <option value="other">Alle overige dieren</option>
                 </select>
                 <button type="submit" class="btn btn-primary">Filter</button>
             </div>

@@ -24,9 +24,6 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Creëer service</button>
-            @if ($errors->any())
-                <div class="alert alert-danger mt-2">{{ $errors->first() }}</div>
-            @endif
         </form>
     </div>
 </x-layout>

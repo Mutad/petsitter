@@ -20,6 +20,10 @@
                         <h5>Over {{ $sitter->user->name }}</h5>
                         {{ $sitter->description }}
                         </p>
+                        @if (Auth::check() && Auth::user()->admin)
+                            <a href="{{ route('sitters.delete', $sitter) }}" class="btn btn-danger">Verwijder sitter</a>
+                            <a href="{{ route('users.delete', $sitter->user) }}" class="btn btn-danger">Verban gebruiker</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -33,9 +37,6 @@
                         @csrf
                         <input type="file" name="image" id="" class="form-control mb-3">
                         <button type="submit" class="btn btn-success">Uploaden</button>
-                        @if ($errors->any())
-                            <div class="alert alert-danger">{{ $errors->first() }}</div>
-                        @endif
                     </form>
                 @endif
                 @forelse ($sitter->photos as $photo)
@@ -96,9 +97,6 @@
                         <textarea class="form-control" name="description" id="descField" rows="3"></textarea>
                     </div>
                     <button class="btn btn-primary" type="submit">Beoordeling achterlaten</button>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">{{ $errors->first() }}</div>
-                    @endif
                 </form>
             @endif
         </div>

@@ -20,7 +20,7 @@ class CreatePetsTable extends Migration
             $table->string('image')->default('default.jpg');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('description');
-            $table->enum('type', ['cat','dog']);
+            $table->enum('type', ['cat','dog','chicken','other']);
             $table->decimal('weight', 5, 2);
             $table->decimal('hourly_rate', 15, 2);
             $table->timestamps();

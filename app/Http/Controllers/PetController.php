@@ -125,7 +125,7 @@ class PetController extends Controller
      */
     public function delete(Pet $pet)
     {
-        if (Auth::user()->id == $pet->owner_id) {
+        if (Auth::user()->id == $pet->owner_id || Auth::user()->admin) {
             $pet->delete();
         }
         return redirect('/');

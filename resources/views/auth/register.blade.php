@@ -1,5 +1,5 @@
 <x-layout :header="false">
-    <div class="d-flex align-items-center vh-100">
+    <div class="d-flex align-items-center vw-100 vh-100">
         <form action="/register" method="post" class="text-center form-signup">
             <h1>Maak een account aan</h1>
             @csrf
@@ -19,7 +19,7 @@
                 <label for="passworField">Wachtwoord</label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-            <a href="/login" class="btn btn-link">Heb je al een account? Vind hem hier.</a>
+            <a href="/login" class="btn btn-link">Heb je al een account? Inloggen kan hier!</a>
             @if ($errors->any())
                 <div class="alert alert-danger">{{ $errors->first() }}</div>
             @endif

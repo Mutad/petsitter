@@ -56,7 +56,7 @@ class SitterController extends Controller
         }
 
         Auth::user()->sitter()->create($validator);
-        return redirect()->route('services.create');
+        return redirect('/');
     }
 
     /**
@@ -100,5 +100,13 @@ class SitterController extends Controller
 
         $sitter->photos()->create($validated);
         return redirect()->back();
+    }
+
+    public function delete(Sitter $sitter)
+    {
+        if (Auth::user()->admin) {
+            $sitter->delete();
+        }
+        return redirect('/');
     }
 }

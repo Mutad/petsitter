@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
 
     public function edit()
     {
-        return view('user.update',['user'=>Auth::user()]);
+        return view('user.update', ['user'=>Auth::user()]);
     }
 
     public function update(Request $request)
@@ -27,6 +28,22 @@ class UserController extends Controller
         ]);
         
         Auth::user()->update($validated);
-        return redirect()->route('user.show',Auth::user());
+        return redirect()->route('user.show', Auth::user());
+    }
+
+    public function delete(User $user)
+    {
+        if (Auth::user()->admin) {
+            $user->delete();
+        }
+        return redirect('/');
+    }
+
+    public function admin()
+    {
+        if (Auth::user()->admin) {
+            return view('admin', ['orders'=> Order::paginate(10)]);
+        }
+        return redirect('/');
     }
 }

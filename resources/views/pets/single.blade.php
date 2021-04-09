@@ -15,13 +15,18 @@
                         Gewicht: {{ $pet->weight }}kg
                     </p>
                     <p>
-                        Uurtarief: €{{ $pet->hourly_rate }}
+                        Gevraagd uurtarief: €{{ $pet->hourly_rate }}
                     </p>
+                    @if (Auth::check() && Auth::user()->admin)
+                        <a href="{{route('pets.delete',$pet)}}" class="btn btn-danger">Verwijder Pet</a>
+                        <a href="{{route('users.delete',$pet->user)}}" class="btn btn-danger">Verban gebruiker</a>
+                    @endif
                     @if (Auth::check() && Auth::user()->sitter && Auth::user()->id != $pet->owner_id)
                         <div class="row">
                             <form class="input-group col-sm p-0 m-1" action="{{ route('pets.sit', $pet) }}">
                                 <input type="text" name="hours" class="form-control" placeholder="Dagen">
-                                <button type="submit" class="btn btn-primary" id="button-addon1">Ja ik wil passen op dit huisdier</button>
+                                <button type="submit" class="btn btn-primary" id="button-addon1">Ja ik wil passen op dit
+                                    huisdier</button>
                             </form>
                         </div>
                     @endif
